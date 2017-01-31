@@ -1,3 +1,5 @@
+package main;
+
 import static spark.Spark.get;
 import static spark.Spark.port;
 
@@ -22,7 +24,7 @@ public class Main {
 		final MongoDatabase db = mongoClient.getDatabase("heymozo");
 
 		try{
-			sendNotification("Aca va el id de firebase");
+			sendNotification("f99Kgx8_0T0:APA91bFAAmN5gjn0BBaAydhuBbi4HL6jrNmb5twlw3HqXDMUzWAFMm3HRzHPg1KSjdzjpXofO7KyFfCK4d3SLD-nhyafArb7lsw7EyBV8r7CFfJA0h1fxMMdWc8UJPt6IkzkS6bpxbfj");
 		} catch(IOException e){
 			e.printStackTrace();
 		}
@@ -35,7 +37,7 @@ public class Main {
 
 		get("/cartas/:id", (request, response) -> {
 			response.status(200);
-			return JSON.serialize(db.getCollection("cartas").find(Filters.eq("id", request.params(":id"))));
+			return JSON.serialize(db.getCollection("cartas").find(Filters.eq("id", new Integer(request.params(":id")))).first());
 		});
 	}
 
@@ -52,8 +54,8 @@ public class Main {
 
 		String urlParameters = "{"
 				+ "\"data\":{"
-				+ "\"title\":\"title\","
-				+ " \"body\":\"body\"},"
+				+ "\"title\":\"Procesando pedido\","
+				+ " \"body\":\"Su pedido ha sido aceptado. 5 minutos.\"},"
 				+ "\"registration_ids\": [\"" + firebaseID + "\"]"
 				+ "}";
 
