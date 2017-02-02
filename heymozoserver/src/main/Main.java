@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.Date;
+import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -26,9 +27,10 @@ public class Main {
 
 	public static final MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017));
 	public static final MongoDatabase db = mongoClient.getDatabase("heymozo");
+	public static final Random ran = new Random(new Date().getTime());
 
 	public enum EstadoPedido {
-		Procesando, Preparando, Sirviendo, Adeudado, Terminado
+		Procesando, Preparando, Sirviendo, Adeudado, Terminado, Cancelado
 	}
 
 	public static void main(String[] args) {
@@ -63,10 +65,15 @@ public class Main {
 			final String pedido = request.body();
 			new Thread(() -> {
 				try{
-					Thread.sleep(60000);
+					Thread.sleep(1000);
 				} catch(InterruptedException e){
 				}
-				procesarPedido(Document.parse(pedido));
+				if(ran.nextDouble() < 0.5){
+					procesarPedido(Document.parse(pedido));
+				}
+				else{
+					cancelarPedido(Document.parse(pedido));
+				}
 			}).start();
 
 			return response;
@@ -102,6 +109,27 @@ public class Main {
 			}
 			servirPedido(pedidoDoc);
 		}).start();
+	}
+
+	private static void cancelarPedido(Document pedidoDoc) {
+		String usuarioId = "usuario_id";
+		String fechaPedido = "fecha_pedido";
+		for(Object o: pedidoDoc.keySet()){
+			if(o.equals(usuarioId)){
+				usuarioId = (String) o;
+			}
+			if(o.equals(fechaPedido)){
+				fechaPedido = (String) o;
+			}
+		}
+		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Cancelado.toString())));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$unset", new Document("finaliza", "")));
+		try{
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Pedido cancelado", "Su pedido ha sido cancelado.");
+		} catch(IOException e1){
+			e1.printStackTrace();
+		}
 	}
 
 	private static void servirPedido(Document pedidoDoc) {
@@ -228,7 +256,7 @@ public class Main {
 	}
 
 	private static void sendNotification(String firebaseID) throws IOException {
-		sendNotification(firebaseID, "Procesando pedido", "Su pedido ha sido aceptado. 5 minutos.");
+		sendNotification(firebaseID, "Inicio correcto", "Servidor de notificaciones inicializado correctamente.");
 	}
 
 }
