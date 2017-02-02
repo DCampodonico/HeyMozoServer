@@ -16,6 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
+import org.bson.types.ObjectId;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -35,7 +36,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		try{
-			sendNotification("f99Kgx8_0T0:APA91bFAAmN5gjn0BBaAydhuBbi4HL6jrNmb5twlw3HqXDMUzWAFMm3HRzHPg1KSjdzjpXofO7KyFfCK4d3SLD-nhyafArb7lsw7EyBV8r7CFfJA0h1fxMMdWc8UJPt6IkzkS6bpxbfj");
+			sendNotification("cobNWDqQvkM:APA91bGlTU_8fPHUUrJNduA_Kv5sj--ZSOzaL1FLufE_zy40GYoNhKoDtU_80NR6644m3N54KqnlJl7-oWHtJUyY74XcJWzrMGSAE0oxqkNaYd7YeI2f6isSr2M1lnC2tRJCpRJf7WXD");
 		} catch(IOException e){
 			e.printStackTrace();
 		}
@@ -54,6 +55,11 @@ public class Main {
 		get("/pedidos/:uid", (request, response) -> {
 			response.status(200);
 			return JSON.serialize(db.getCollection("pedidos").find(Filters.eq("usuario_id", request.params(":uid"))));
+		});
+
+		get("/pedidos/:uid/:pId", (request, response) -> {
+			response.status(200);
+			return JSON.serialize(db.getCollection("pedidos").find(Filters.and(Filters.eq("usuario_id", request.params(":uid")), Filters.eq("_id", new ObjectId(request.params(":pId"))))).first());
 		});
 
 		post("/pedido", (request, response) -> {
@@ -96,7 +102,7 @@ public class Main {
 		final Long futuro = 120000L;
 		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("finaliza", new Long(new Date().getTime() + futuro))));
 		try{
-			sendNotification(pedidoDoc.getString(usuarioId), "Procesando pedido", "Su pedido ha sido aceptado y estara listo en unos minutos.");
+			sendNotification(pedidoDoc.getString(usuarioId), "Procesando pedido", "Su pedido ha sido aceptado y estara listo en unos minutos.", db.getCollection("pedidos").find(filtro).first().get("_id").toString());
 		} catch(IOException e1){
 			e1.printStackTrace();
 		}
@@ -126,7 +132,7 @@ public class Main {
 		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Cancelado.toString())));
 		db.getCollection("pedidos").updateOne(filtro, new Document("$unset", new Document("finaliza", "")));
 		try{
-			sendNotification(pedidoDoc.get(usuarioId).toString(), "Pedido cancelado", "Su pedido ha sido cancelado.");
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Pedido cancelado", "Su pedido ha sido cancelado.", db.getCollection("pedidos").find(filtro).first().get("_id").toString());
 		} catch(IOException e1){
 			e1.printStackTrace();
 		}
@@ -147,7 +153,7 @@ public class Main {
 		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Sirviendo.toString())));
 		db.getCollection("pedidos").updateOne(filtro, new Document("$unset", new Document("finaliza", "")));
 		try{
-			sendNotification(pedidoDoc.get(usuarioId).toString(), "Sirviendo pedido", "¡Su pedido esta por llegar a su mesa!.");
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Sirviendo pedido", "¡Su pedido esta por llegar a su mesa!.", db.getCollection("pedidos").find(filtro).first().get("_id").toString());
 		} catch(IOException e1){
 			e1.printStackTrace();
 		}
@@ -176,7 +182,7 @@ public class Main {
 		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
 		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Adeudado.toString())));
 		try{
-			sendNotification(pedidoDoc.get(usuarioId).toString(), "Disfrute su pedido", "¡Bon Appetit!.");
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Disfrute su pedido", "¡Bon Appetit!.", db.getCollection("pedidos").find(filtro).first().get("_id").toString());
 		} catch(IOException e1){
 			e1.printStackTrace();
 		}
@@ -205,13 +211,13 @@ public class Main {
 		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
 		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Terminado.toString())));
 		try{
-			sendNotification(pedidoDoc.get(usuarioId).toString(), "Gracias por elegirnos!", "Su pago ha sido procesado correctamente.");
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Gracias por elegirnos!", "Su pago ha sido procesado correctamente.", db.getCollection("pedidos").find(filtro).first().get("_id").toString());
 		} catch(IOException e1){
 			e1.printStackTrace();
 		}
 	}
 
-	private static void sendNotification(String firebaseID, String titulo, String cuerpo) throws IOException {
+	private static void sendNotification(String firebaseID, String titulo, String cuerpo, String pedidoId) throws IOException {
 		String url = "https://fcm.googleapis.com/fcm/send";
 
 		URL obj = new URL(url);
@@ -224,6 +230,7 @@ public class Main {
 
 		String urlParameters = "{"
 				+ "\"data\":{"
+				+ ((pedidoId != null) ? ("\"pedidoId\":\"" + pedidoId + "\",") : (""))
 				+ "\"title\":\"" + titulo + "\","
 				+ " \"body\":\"" + cuerpo + "\"},"
 				+ "\"registration_ids\": [\"" + firebaseID + "\"]"
@@ -253,6 +260,10 @@ public class Main {
 
 		//print result
 		System.out.println(response.toString());
+	}
+
+	private static void sendNotification(String firebaseID, String titulo, String cuerpo) throws IOException {
+		sendNotification(firebaseID, titulo, cuerpo, null);
 	}
 
 	private static void sendNotification(String firebaseID) throws IOException {
