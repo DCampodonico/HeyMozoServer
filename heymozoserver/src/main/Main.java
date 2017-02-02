@@ -65,7 +65,7 @@ public class Main {
 			final String pedido = request.body();
 			new Thread(() -> {
 				try{
-					Thread.sleep(1000);
+					Thread.sleep(60000);
 				} catch(InterruptedException e){
 				}
 				if(ran.nextDouble() < 0.5){
