@@ -2,6 +2,7 @@ package main;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
+import static spark.Spark.post;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -10,6 +11,8 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
+
+import org.bson.Document;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -38,6 +41,17 @@ public class Main {
 		get("/cartas/:id", (request, response) -> {
 			response.status(200);
 			return JSON.serialize(db.getCollection("cartas").find(Filters.eq("id", new Integer(request.params(":id")))).first());
+		});
+
+		get("/pedidos/:uid", (request, response) -> {
+			response.status(200);
+			return JSON.serialize(db.getCollection("pedidos").find(Filters.eq("usuario_id", request.params(":uid"))));
+		});
+
+		post("/pedido", (request, response) -> {
+			response.status(200);
+			db.getCollection("pedidos").insertOne(Document.parse(request.body()));
+			return response;
 		});
 	}
 
