@@ -9,10 +9,12 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.Date;
 
 import javax.net.ssl.HttpsURLConnection;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
@@ -22,10 +24,14 @@ import com.mongodb.util.JSON;
 
 public class Main {
 
-	public static void main(String[] args) {
-		final MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017));
-		final MongoDatabase db = mongoClient.getDatabase("heymozo");
+	public static final MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017));
+	public static final MongoDatabase db = mongoClient.getDatabase("heymozo");
 
+	public enum EstadoPedido {
+		Procesando, Preparando, Sirviendo, Adeudado, Terminado
+	}
+
+	public static void main(String[] args) {
 		try{
 			sendNotification("f99Kgx8_0T0:APA91bFAAmN5gjn0BBaAydhuBbi4HL6jrNmb5twlw3HqXDMUzWAFMm3HRzHPg1KSjdzjpXofO7KyFfCK4d3SLD-nhyafArb7lsw7EyBV8r7CFfJA0h1fxMMdWc8UJPt6IkzkS6bpxbfj");
 		} catch(IOException e){
@@ -49,13 +55,135 @@ public class Main {
 		});
 
 		post("/pedido", (request, response) -> {
+			//Guardar pedido
 			response.status(200);
 			db.getCollection("pedidos").insertOne(Document.parse(request.body()));
+
+			//Esperar un tiempo y simular una atención
+			final String pedido = request.body();
+			new Thread(() -> {
+				try{
+					Thread.sleep(60000);
+				} catch(InterruptedException e){
+				}
+				procesarPedido(Document.parse(pedido));
+			}).start();
+
 			return response;
 		});
 	}
 
-	private static void sendNotification(String firebaseID) throws IOException {
+	private static void procesarPedido(Document pedidoDoc) {
+		String usuarioId = "usuario_id";
+		String fechaPedido = "fecha_pedido";
+		for(Object o: pedidoDoc.keySet()){
+			if(o.equals(usuarioId)){
+				usuarioId = (String) o;
+			}
+			if(o.equals(fechaPedido)){
+				fechaPedido = (String) o;
+			}
+		}
+		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Procesando.toString())));
+		final Long futuro = 120000L;
+		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("finaliza", new Long(new Date().getTime() + futuro))));
+		try{
+			sendNotification(pedidoDoc.getString(usuarioId), "Procesando pedido", "Su pedido ha sido aceptado y estara listo en unos minutos.");
+		} catch(IOException e1){
+			e1.printStackTrace();
+		}
+
+		//Esperar un tiempo y simular una atención
+		new Thread(() -> {
+			try{
+				Thread.sleep(futuro + 5000);
+			} catch(InterruptedException e){
+			}
+			servirPedido(pedidoDoc);
+		}).start();
+	}
+
+	private static void servirPedido(Document pedidoDoc) {
+		String usuarioId = "usuario_id";
+		String fechaPedido = "fecha_pedido";
+		for(Object o: pedidoDoc.keySet()){
+			if(o.equals(usuarioId)){
+				usuarioId = (String) o;
+			}
+			if(o.equals(fechaPedido)){
+				fechaPedido = (String) o;
+			}
+		}
+		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Sirviendo.toString())));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$unset", new Document("finaliza", "")));
+		try{
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Sirviendo pedido", "¡Su pedido esta por llegar a su mesa!.");
+		} catch(IOException e1){
+			e1.printStackTrace();
+		}
+
+		//Esperar un tiempo y simular una atención
+		new Thread(() -> {
+			try{
+				Thread.sleep(60000);
+			} catch(InterruptedException e){
+			}
+			adeudarPedido(pedidoDoc);
+		}).start();
+	}
+
+	private static void adeudarPedido(Document pedidoDoc) {
+		String usuarioId = "usuario_id";
+		String fechaPedido = "fecha_pedido";
+		for(Object o: pedidoDoc.keySet()){
+			if(o.equals(usuarioId)){
+				usuarioId = (String) o;
+			}
+			if(o.equals(fechaPedido)){
+				fechaPedido = (String) o;
+			}
+		}
+		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Adeudado.toString())));
+		try{
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Disfrute su pedido", "¡Bon Appetit!.");
+		} catch(IOException e1){
+			e1.printStackTrace();
+		}
+
+		//Esperar un tiempo y simular una atención
+		new Thread(() -> {
+			try{
+				Thread.sleep(60000);
+			} catch(InterruptedException e){
+			}
+			finalizarPedido(pedidoDoc);
+		}).start();
+	}
+
+	private static void finalizarPedido(Document pedidoDoc) {
+		String usuarioId = "usuario_id";
+		String fechaPedido = "fecha_pedido";
+		for(Object o: pedidoDoc.keySet()){
+			if(o.equals(usuarioId)){
+				usuarioId = (String) o;
+			}
+			if(o.equals(fechaPedido)){
+				fechaPedido = (String) o;
+			}
+		}
+		Bson filtro = Filters.and(Filters.eq("usuario_id", pedidoDoc.get(usuarioId)), Filters.eq("fecha_pedido", pedidoDoc.get(fechaPedido)));
+		db.getCollection("pedidos").updateOne(filtro, new Document("$set", new Document("estado", EstadoPedido.Terminado.toString())));
+		try{
+			sendNotification(pedidoDoc.get(usuarioId).toString(), "Gracias por elegirnos!", "Su pago ha sido procesado correctamente.");
+		} catch(IOException e1){
+			e1.printStackTrace();
+		}
+	}
+
+	private static void sendNotification(String firebaseID, String titulo, String cuerpo) throws IOException {
 		String url = "https://fcm.googleapis.com/fcm/send";
 
 		URL obj = new URL(url);
@@ -68,8 +196,8 @@ public class Main {
 
 		String urlParameters = "{"
 				+ "\"data\":{"
-				+ "\"title\":\"Procesando pedido\","
-				+ " \"body\":\"Su pedido ha sido aceptado. 5 minutos.\"},"
+				+ "\"title\":\"" + titulo + "\","
+				+ " \"body\":\"" + cuerpo + "\"},"
 				+ "\"registration_ids\": [\"" + firebaseID + "\"]"
 				+ "}";
 
@@ -97,6 +225,10 @@ public class Main {
 
 		//print result
 		System.out.println(response.toString());
+	}
+
+	private static void sendNotification(String firebaseID) throws IOException {
+		sendNotification(firebaseID, "Procesando pedido", "Su pedido ha sido aceptado. 5 minutos.");
 	}
 
 }
