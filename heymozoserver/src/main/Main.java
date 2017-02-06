@@ -57,9 +57,14 @@ public class Main {
 			return JSON.serialize(db.getCollection("pedidos").find(Filters.eq("usuario_id", request.params(":uid"))));
 		});
 
-		get("/pedidos/:uid/:pId", (request, response) -> {
+		get("/pedidos/:uid/:pid", (request, response) -> {
 			response.status(200);
-			return JSON.serialize(db.getCollection("pedidos").find(Filters.and(Filters.eq("usuario_id", request.params(":uid")), Filters.eq("_id", new ObjectId(request.params(":pId"))))).first());
+			return JSON.serialize(db.getCollection("pedidos").find(Filters.and(Filters.eq("usuario_id", request.params(":uid")), Filters.eq("_id", new ObjectId(request.params(":pid"))))).first());
+		});
+
+		get("/imagenes/:iid", (request, response) -> {
+			response.status(200);
+			return JSON.serialize(db.getCollection("imagenes").find(Filters.eq("_id", request.params(":iid"))).first());
 		});
 
 		post("/pedido", (request, response) -> {
