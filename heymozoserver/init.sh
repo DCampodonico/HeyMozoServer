@@ -8,7 +8,11 @@ db.restaurantes.insert({
                 "moneda": "$"
             },
             "latitud": -31.6366443,
-            "longitud": -60.699605
+            "longitud": -60.699605,
+	    "direccion": "Blvd. Galvez 2281, S3000ABA Santa Fe",
+	    "telefono": "0342 452-0309",
+	    "pagina": "https://www.facebook.com/1980boulevard/",
+	    "rating": 4.1
         });
 db.restaurantes.insert({
             "id": 2,
@@ -17,7 +21,11 @@ db.restaurantes.insert({
                 "moneda": "$"
             },
             "latitud": -31.6387288,
-            "longitud": -60.6936089
+            "longitud": -60.6936089,
+	    "direccion": "Sarmiento 3398, S3000 Santa Fe",
+	    "telefono": "0342 456-2868",
+	    "pagina": "https://www.facebook.com/paladaroriginal/",
+	    "rating": 3.9
         });
 db.cartas.drop();
 db.cartas.createIndex({"id":1});
