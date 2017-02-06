@@ -35,12 +35,6 @@ public class Main {
 	}
 
 	public static void main(String[] args) {
-		try{
-			sendNotification("cobNWDqQvkM:APA91bGlTU_8fPHUUrJNduA_Kv5sj--ZSOzaL1FLufE_zy40GYoNhKoDtU_80NR6644m3N54KqnlJl7-oWHtJUyY74XcJWzrMGSAE0oxqkNaYd7YeI2f6isSr2M1lnC2tRJCpRJf7WXD");
-		} catch(IOException e){
-			e.printStackTrace();
-		}
-
 		port(3000);
 		get("/restaurantes", (request, response) -> {
 			response.status(200);
@@ -266,13 +260,4 @@ public class Main {
 		//print result
 		System.out.println(response.toString());
 	}
-
-	private static void sendNotification(String firebaseID, String titulo, String cuerpo) throws IOException {
-		sendNotification(firebaseID, titulo, cuerpo, null);
-	}
-
-	private static void sendNotification(String firebaseID) throws IOException {
-		sendNotification(firebaseID, "Inicio correcto", "Servidor de notificaciones inicializado correctamente.");
-	}
-
 }
