@@ -43,7 +43,7 @@ public class Main {
 
 		get("/cartas/:id", (request, response) -> {
 			response.status(200);
-			return JSON.serialize(db.getCollection("cartas").find(Filters.eq("id", new Integer(request.params(":id")))).first());
+			return JSON.serialize(db.getCollection("cartas").find(Filters.eq("id", new Double(request.params(":id")).intValue())).first());
 		});
 
 		get("/pedidos/:uid", (request, response) -> {
