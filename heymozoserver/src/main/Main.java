@@ -13,6 +13,8 @@ import java.util.Date;
 import java.util.Random;
 
 import javax.net.ssl.HttpsURLConnection;
+import javax.servlet.http.HttpServletResponse;
+import javax.xml.bind.DatatypeConverter;
 
 import org.bson.Document;
 import org.bson.conversions.Bson;
@@ -58,7 +60,13 @@ public class Main {
 
 		get("/imagenes/:iid", (request, response) -> {
 			response.status(200);
-			return JSON.serialize(db.getCollection("imagenes").find(Filters.eq("_id", request.params(":iid"))).first());
+			String imagen64 = db.getCollection("imagenes").find(Filters.eq("id", new Double(request.params(":iid")).intValue())).first().getString("imagen");
+			byte[] imagenBytes = DatatypeConverter.parseBase64Binary(imagen64);
+			HttpServletResponse raw = response.raw();
+			raw.getOutputStream().write(imagenBytes);
+			raw.getOutputStream().flush();
+			raw.getOutputStream().close();
+			return response.raw();
 		});
 
 		post("/pedido", (request, response) -> {
@@ -70,7 +78,7 @@ public class Main {
 			final String pedido = request.body();
 			new Thread(() -> {
 				try{
-					Thread.sleep(60000);
+					Thread.sleep(6000);
 				} catch(InterruptedException e){
 				}
 				if(ran.nextDouble() < 0.5){
