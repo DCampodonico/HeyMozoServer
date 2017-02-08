@@ -1,4 +1,4 @@
-package main;
+	package main;
 
 import static spark.Spark.get;
 import static spark.Spark.port;
@@ -60,7 +60,7 @@ public class Main {
 
 		get("/imagenes/:iid", (request, response) -> {
 			response.status(200);
-			String imagen64 = db.getCollection("imagenes").find(Filters.eq("id", new Double(request.params(":iid")).intValue())).first().getString("imagen");
+			String imagen64 = db.getCollection("imagenes").find(Filters.eq("id", request.params(":iid"))).first().getString("imagen");
 			byte[] imagenBytes = DatatypeConverter.parseBase64Binary(imagen64);
 			HttpServletResponse raw = response.raw();
 			raw.getOutputStream().write(imagenBytes);

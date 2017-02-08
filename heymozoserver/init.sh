@@ -40,82 +40,38 @@ db.cartas.insert({
             "secciones": [
                 {
                     "id": 1,
-                    "nombre": "Entradas",
+                    "nombre": "Empanadas",
                     "productos": [
                         {
                             "id": 1,
-                            "nombre": "Empanadas de carne",
-                            "precio": 12
+                            "nombre": "Empanada de carne",
+                            "precio": 12,
+                            "descripcion_corta":"Saladas o dulces. Carne vacuna, con aceitunas negras."
                         },
                         {
                             "id": 2,
-                            "nombre": "Empanadas de verdura",
-                            "precio": 23
+                            "nombre": "Empanada de verdura",
+                            "precio": 12,
+                            "descripcion_corta":"Acelga, huevo, morrón y aceitunas"
                         },
                         {
                             "id": 3,
-                            "nombre": "Empanadas árabes",
-                            "precio": 34
+                            "nombre": "Empanada de pollo",
+                            "precio": 14,
+                            "descripcion_corta":"Pollo, cebolla, morrón y pimiento."
                         },
                         {
                             "id": 4,
-                            "nombre": "Ensalada",
-                            "precio": 38
+                            "nombre": "Empanada de jamón y queso",
+                            "precio": 14,
+                            "descripcion_corta":"Jamón cocido, queso muzzarella y huevo"
                         },
                         {
                             "id": 5,
-                            "nombre": "Papas fritas",
-                            "precio": 86
-                        },
-                        {
-                            "id": 6,
-                            "nombre": "Empanadas de carne",
-                            "precio": 12
-                        },
-                        {
-                            "id": 7,
-                            "nombre": "Empanadas de verdura",
-                            "precio": 23
-                        },
-                        {
-                            "id": 8,
-                            "nombre": "Empanadas árabes",
-                            "precio": 34
-                        },
-                        {
-                            "id": 9,
-                            "nombre": "Ensalada",
-                            "precio": 38
-                        },
-                        {
-                            "id": 10,
-                            "nombre": "Papas fritas",
-                            "precio": 86
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "Empanadas de carne",
-                            "precio": 12
-                        },
-                        {
-                            "id": 12,
-                            "nombre": "Empanadas de verdura",
-                            "precio": 23
-                        },
-                        {
-                            "id": 13,
-                            "nombre": "Empanadas árabes",
-                            "precio": 34
-                        },
-                        {
-                            "id": 14,
-                            "nombre": "Ensalada",
-                            "precio": 38
-                        },
-                        {
-                            "id": 15,
-                            "nombre": "Papas fritas",
-                            "precio": 86
+                            "nombre": "Empanada árabe",
+                            "precio": 18,
+                            "descripcion_corta":"Cebolla, tomate y limón a gusto",
+                            "descripcion_larga":"La gastronomía árabe es el conjunto de cocinas pertenecientes a los países árabes. Se puede decir que es el conjunto de comidas tradicionales a los ciudadanos de los Estados árabes del Golfo incluyendo todos los países de la Península Arábica, los países del norte de África cuya mayoría de idioma es el idioma árabe. La cocina árabe se puede ver fácilmente que es una mezcla equilibrada de características gastronómicas mediterráneas y de cocina India en el empleo de las especias."
                         }
                     ]
                 },
@@ -125,84 +81,16 @@ db.cartas.insert({
                     "productos": [
                         {
                             "id": 1,
-                            "nombre": "Sandwiches",
-                            "precio": 12
+                            "nombre": "Sandwich triple",
+                            "precio": 12,
+                            "descripcion_corta":"Con jamón y queso",
+                            "descripcion_larga":"sdgd"
                         },
                         {
                             "id": 2,
-                            "nombre": "Triples",
-                            "precio": 67
-                        },
-                        {
-                            "id": 3,
-                            "nombre": "Jamon cocido",
-                            "precio": 24
-                        },
-                        {
-                            "id": 4,
-                            "nombre": "Sandwich con ananá",
-                            "precio": 56
-                        },
-                        {
-                            "id": 5,
-                            "nombre": "Sandwiches",
-                            "precio": 65
-                        },
-                        {
-                            "id": 6,
-                            "nombre": "Triples",
-                            "precio": 67
-                        },
-                        {
-                            "id": 7,
-                            "nombre": "Jamón cocido",
-                            "precio": 24
-                        },
-                        {
-                            "id": 8,
-                            "nombre": "Sandwich con ananá",
-                            "precio": 24
-                        },
-                        {
-                            "id": 9,
-                            "nombre": "Sandwiches",
-                            "precio": 14
-                        },
-                        {
-                            "id": 10,
-                            "nombre": "Triples",
-                            "precio": 67
-                        },
-                        {
-                            "id": 11,
-                            "nombre": "Jamón cocido",
-                            "precio": 24
-                        },
-                        {
-                            "id": 12,
-                            "nombre": "Sandwich con ananá",
-                            "precio": 24
-                        },
-                        {
-                            "id": 13,
-                            "nombre": "Sandwiches",
+                            "nombre": "Sandwich triple",
                             "precio": 12
-                        },
-                        {
-                            "id": 14,
-                            "nombre": "Triples",
-                            "precio": 67
-                        },
-                        {
-                            "id": 15,
-                            "nombre": "Jamón cocido",
-                            "precio": 24
-                        },
-                        {
-                            "id": 16,
-                            "nombre": "Sandwich con ananá",
-                            "precio": 78
-                        }
+                        }   
                     ]
                 },
                 {
@@ -227,7 +115,8 @@ db.cartas.insert({
                         {
                             "id": 4,
                             "nombre": "4 quesos",
-                            "precio": 172
+                            "precio": 172,
+                            "imagen": {"id":"1.1.1"}
                         },
                         {
                             "id": 5,
