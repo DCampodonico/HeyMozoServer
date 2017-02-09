@@ -1,19 +1,27 @@
 package main;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collection;
 
 import org.bson.Document;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import com.mongodb.MongoClient;
 import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
+import com.mongodb.util.JSON;
 
 public class Scripts {
 
@@ -22,7 +30,6 @@ public class Scripts {
 
 	public static void main(String[] args) {
 		init();
-		agregarImagenesRestaurantes();
 		setearIdImagenAProductosCarta(1);
 		cargarImagenes();
 		cambiarImagenRestaurante();
@@ -73,7 +80,7 @@ public class Scripts {
 
 	private static void cargarImagenes() {
 		db.getCollection("imagenes").drop();	
-		String path = "./src/imagenes";
+		String path = "./src/datos/imagenes";
 
         String nombreImagen;
         File carpeta = new File(path);
@@ -83,10 +90,10 @@ public class Scripts {
 
             if (i.isFile()){
             	nombreImagen = i.getName().substring(0, i.getName().lastIndexOf('.'));
+            	System.out.println(nombreImagen);
 				FileInputStream imagenInputStream;
 				try {
 					imagenInputStream = new FileInputStream(i);
-					
 					
 		            byte imagenByteArray[] = new byte[(int) i.length()];
 		            imagenInputStream.read(imagenByteArray);
@@ -104,447 +111,33 @@ public class Scripts {
             }
         }
 	}
+	
+	private static void fileToDB(String filePath, String collection){
+		
+		JSONParser parser = new JSONParser();
+		JSONObject a;
+		try {
+			a = (JSONObject) parser.parse(new FileReader(filePath));
+			
+			//for (Object o : a){
+				db.getCollection(collection).insertOne(Document.parse(a.toString()));
+				//}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private static void init() {
 		db.getCollection("restaurantes").drop();
-		db.getCollection("restaurantes").insertOne(Document.parse("{\n" +
-				"\t\t            \"id\": 1,\n" +
-				"\t\t            \"nombre\": \"Bar-Resto 1980\",\n" +
-				"\t\t            \"moneda\": {\n" +
-				"\t\t                \"moneda\": \"$\"\n" +
-				"\t\t            },\n" +
-				"\t\t            \"latitud\": -31.6366443,\n" +
-				"\t\t            \"longitud\": -60.699605,\n" +
-				"\t\t\t    \"direccion\": \"Blvd. Galvez 2281, S3000ABA Santa Fe\",\n" +
-				"\t\t\t    \"telefono\": \"0342 452-0309\",\n" +
-				"\t\t\t    \"pagina\": \"https://www.facebook.com/1980boulevard/\",\n" +
-				"\t\t\t    \"rating\": 4.1\n" +
-				"\t\t        }"));
-		db.getCollection("restaurantes").insertOne(Document.parse("{\n" +
-				"\t\t            \"id\": 2,\n" +
-				"\t\t            \"nombre\": \"Paladar Negro\",\n" +
-				"\t\t            \"moneda\": {\n" +
-				"\t\t                \"moneda\": \"$\"\n" +
-				"\t\t            },\n" +
-				"\t\t            \"latitud\": -31.6387288,\n" +
-				"\t\t            \"longitud\": -60.6936089,\n" +
-				"\t\t\t    \"direccion\": \"Sarmiento 3398, S3000 Santa Fe\",\n" +
-				"\t\t\t    \"telefono\": \"0342 456-2868\",\n" +
-				"\t\t\t    \"pagina\": \"https://www.facebook.com/paladaroriginal/\",\n" +
-				"\t\t\t    \"rating\": 3.9\n" +
-				"\t\t        }"));
+		fileToDB(new File("src/datos/restaurantes.json").getAbsolutePath(),"restaurantes");
+		
 		db.getCollection("cartas").drop();
-		db.getCollection("cartas").insertOne(Document.parse("{\n" +
-				"\t\t            \"id\": 1,\n" +
-				"\t\t            \"nombre_restaurant\": {\n" +
-				"\t\t                \"nombre\": \"Bar-Resto 1980\",\n" +
-				"\t\t                \"moneda\": {\n" +
-				"\t\t                    \"moneda\": \"$\"\n" +
-				"\t\t                }\n" +
-				"\t\t            },\n" +
-				"\t\t            \"secciones\": [\n" +
-				"\t\t                {\n" +
-				"\t\t                    \"id\": 1,\n" +
-				"\t\t                    \"nombre\": \"Entradas\",\n" +
-				"\t\t                    \"productos\": [\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 1,\n" +
-				"\t\t                            \"nombre\": \"Empanadas de carne\",\n" +
-				"\t\t                            \"precio\": 12\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 2,\n" +
-				"\t\t                            \"nombre\": \"Empanadas de verdura\",\n" +
-				"\t\t                            \"precio\": 23\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 3,\n" +
-				"\t\t                            \"nombre\": \"Empanadas árabes\",\n" +
-				"\t\t                            \"precio\": 34\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 4,\n" +
-				"\t\t                            \"nombre\": \"Ensalada\",\n" +
-				"\t\t                            \"precio\": 38\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 5,\n" +
-				"\t\t                            \"nombre\": \"Papas fritas\",\n" +
-				"\t\t                            \"precio\": 86\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 6,\n" +
-				"\t\t                            \"nombre\": \"Empanadas de carne\",\n" +
-				"\t\t                            \"precio\": 12\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 7,\n" +
-				"\t\t                            \"nombre\": \"Empanadas de verdura\",\n" +
-				"\t\t                            \"precio\": 23\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 8,\n" +
-				"\t\t                            \"nombre\": \"Empanadas árabes\",\n" +
-				"\t\t                            \"precio\": 34\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 9,\n" +
-				"\t\t                            \"nombre\": \"Ensalada\",\n" +
-				"\t\t                            \"precio\": 38\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 10,\n" +
-				"\t\t                            \"nombre\": \"Papas fritas\",\n" +
-				"\t\t                            \"precio\": 86\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 11,\n" +
-				"\t\t                            \"nombre\": \"Empanadas de carne\",\n" +
-				"\t\t                            \"precio\": 12\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 12,\n" +
-				"\t\t                            \"nombre\": \"Empanadas de verdura\",\n" +
-				"\t\t                            \"precio\": 23\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 13,\n" +
-				"\t\t                            \"nombre\": \"Empanadas árabes\",\n" +
-				"\t\t                            \"precio\": 34\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 14,\n" +
-				"\t\t                            \"nombre\": \"Ensalada\",\n" +
-				"\t\t                            \"precio\": 38\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 15,\n" +
-				"\t\t                            \"nombre\": \"Papas fritas\",\n" +
-				"\t\t                            \"precio\": 86\n" +
-				"\t\t                        }\n" +
-				"\t\t                    ]\n" +
-				"\t\t                },\n" +
-				"\t\t                {\n" +
-				"\t\t                    \"id\": 2,\n" +
-				"\t\t                    \"nombre\": \"Sandwiches\",\n" +
-				"\t\t                    \"productos\": [\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 1,\n" +
-				"\t\t                            \"nombre\": \"Sandwiches\",\n" +
-				"\t\t                            \"precio\": 12\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 2,\n" +
-				"\t\t                            \"nombre\": \"Triples\",\n" +
-				"\t\t                            \"precio\": 67\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 3,\n" +
-				"\t\t                            \"nombre\": \"Jamon cocido\",\n" +
-				"\t\t                            \"precio\": 24\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 4,\n" +
-				"\t\t                            \"nombre\": \"Sandwich con ananá\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 5,\n" +
-				"\t\t                            \"nombre\": \"Sandwiches\",\n" +
-				"\t\t                            \"precio\": 65\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 6,\n" +
-				"\t\t                            \"nombre\": \"Triples\",\n" +
-				"\t\t                            \"precio\": 67\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 7,\n" +
-				"\t\t                            \"nombre\": \"Jamón cocido\",\n" +
-				"\t\t                            \"precio\": 24\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 8,\n" +
-				"\t\t                            \"nombre\": \"Sandwich con ananá\",\n" +
-				"\t\t                            \"precio\": 24\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 9,\n" +
-				"\t\t                            \"nombre\": \"Sandwiches\",\n" +
-				"\t\t                            \"precio\": 14\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 10,\n" +
-				"\t\t                            \"nombre\": \"Triples\",\n" +
-				"\t\t                            \"precio\": 67\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 11,\n" +
-				"\t\t                            \"nombre\": \"Jamón cocido\",\n" +
-				"\t\t                            \"precio\": 24\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 12,\n" +
-				"\t\t                            \"nombre\": \"Sandwich con ananá\",\n" +
-				"\t\t                            \"precio\": 24\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 13,\n" +
-				"\t\t                            \"nombre\": \"Sandwiches\",\n" +
-				"\t\t                            \"precio\": 12\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 14,\n" +
-				"\t\t                            \"nombre\": \"Triples\",\n" +
-				"\t\t                            \"precio\": 67\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 15,\n" +
-				"\t\t                            \"nombre\": \"Jamón cocido\",\n" +
-				"\t\t                            \"precio\": 24\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 16,\n" +
-				"\t\t                            \"nombre\": \"Sandwich con ananá\",\n" +
-				"\t\t                            \"precio\": 78\n" +
-				"\t\t                        }\n" +
-				"\t\t                    ]\n" +
-				"\t\t                },\n" +
-				"\t\t                {\n" +
-				"\t\t                    \"id\": 3,\n" +
-				"\t\t                    \"nombre\": \"Pizzas\",\n" +
-				"\t\t                    \"productos\": [\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 1,\n" +
-				"\t\t                            \"nombre\": \"Especial\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 2,\n" +
-				"\t\t                            \"nombre\": \"Napolitana\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 3,\n" +
-				"\t\t                            \"nombre\": \"Cebollada\",\n" +
-				"\t\t                            \"precio\": 180\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 4,\n" +
-				"\t\t                            \"nombre\": \"4 quesos\",\n" +
-				"\t\t                            \"precio\": 172\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 5,\n" +
-				"\t\t                            \"nombre\": \"Especial\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 6,\n" +
-				"\t\t                            \"nombre\": \"Napolitana\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 7,\n" +
-				"\t\t                            \"nombre\": \"Cebollada\",\n" +
-				"\t\t                            \"precio\": 180\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 8,\n" +
-				"\t\t                            \"nombre\": \"4 quesos\",\n" +
-				"\t\t                            \"precio\": 172\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 9,\n" +
-				"\t\t                            \"nombre\": \"Especial\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 10,\n" +
-				"\t\t                            \"nombre\": \"Napolitana\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 11,\n" +
-				"\t\t                            \"nombre\": \"Cebollada\",\n" +
-				"\t\t                            \"precio\": 180\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 12,\n" +
-				"\t\t                            \"nombre\": \"4 quesos\",\n" +
-				"\t\t                            \"precio\": 172\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 13,\n" +
-				"\t\t                            \"nombre\": \"Especial\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 14,\n" +
-				"\t\t                            \"nombre\": \"Napolitana\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 15,\n" +
-				"\t\t                            \"nombre\": \"Cebollada\",\n" +
-				"\t\t                            \"precio\": 180\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 16,\n" +
-				"\t\t                            \"nombre\": \"4 quesos\",\n" +
-				"\t\t                            \"precio\": 172\n" +
-				"\t\t                        }\n" +
-				"\t\t                    ]\n" +
-				"\t\t                },\n" +
-				"\t\t                {\n" +
-				"\t\t                    \"id\": 4,\n" +
-				"\t\t                    \"nombre\": \"Postres\",\n" +
-				"\t\t                    \"productos\": [\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 1,\n" +
-				"\t\t                            \"nombre\": \"Helado\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 2,\n" +
-				"\t\t                            \"nombre\": \"Torta alemana\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 3,\n" +
-				"\t\t                            \"nombre\": \"Tiramisú\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 4,\n" +
-				"\t\t                            \"nombre\": \"Frutas\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 5,\n" +
-				"\t\t                            \"nombre\": \"Helado\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 6,\n" +
-				"\t\t                            \"nombre\": \"Torta alemana\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 7,\n" +
-				"\t\t                            \"nombre\": \"Tiramisú\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 8,\n" +
-				"\t\t                            \"nombre\": \"Frutas\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 9,\n" +
-				"\t\t                            \"nombre\": \"Helado\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 10,\n" +
-				"\t\t                            \"nombre\": \"Torta alemana\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 11,\n" +
-				"\t\t                            \"nombre\": \"Tiramisú\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 12,\n" +
-				"\t\t                            \"nombre\": \"Frutas\",\n" +
-				"\t\t                            \"precio\": 56\n" +
-				"\t\t                        }\n" +
-				"\t\t                    ]\n" +
-				"\t\t                },\n" +
-				"\t\t                {\n" +
-				"\t\t                    \"id\": 5,\n" +
-				"\t\t                    \"nombre\": \"Bebidas\",\n" +
-				"\t\t                    \"productos\": [\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 1,\n" +
-				"\t\t                            \"nombre\": \"Fernet\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 2,\n" +
-				"\t\t                            \"nombre\": \"Gancia\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 3,\n" +
-				"\t\t                            \"nombre\": \"Whisky\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 4,\n" +
-				"\t\t                            \"nombre\": \"Martini\",\n" +
-				"\t\t                            \"precio\": 142\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 5,\n" +
-				"\t\t                            \"nombre\": \"Jarra loca\",\n" +
-				"\t\t                            \"precio\": 200\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 6,\n" +
-				"\t\t                            \"nombre\": \"Fernet\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 7,\n" +
-				"\t\t                            \"nombre\": \"Gancia\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 8,\n" +
-				"\t\t                            \"nombre\": \"Whisky\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 9,\n" +
-				"\t\t                            \"nombre\": \"Martini\",\n" +
-				"\t\t                            \"precio\": 142\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 10,\n" +
-				"\t\t                            \"nombre\": \"Jarra loca\",\n" +
-				"\t\t                            \"precio\": 200\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 11,\n" +
-				"\t\t                            \"nombre\": \"Fernet\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 12,\n" +
-				"\t\t                            \"nombre\": \"Gancia\",\n" +
-				"\t\t                            \"precio\": 122\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 13,\n" +
-				"\t\t                            \"nombre\": \"Whisky\",\n" +
-				"\t\t                            \"precio\": 190\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 14,\n" +
-				"\t\t                            \"nombre\": \"Martini\",\n" +
-				"\t\t                            \"precio\": 142\n" +
-				"\t\t                        },\n" +
-				"\t\t                        {\n" +
-				"\t\t                            \"id\": 15,\n" +
-				"\t\t                            \"nombre\": \"Jarra loca\",\n" +
-				"\t\t                            \"precio\": 200\n" +
-				"\t\t                        }\n" +
-				"\t\t                    ]\n" +
-				"\t\t                }\n" +
-				"\t\t            ]\n" +
-				"\t\t        }"));
+		fileToDB(new File("src/datos/cartas.json").getAbsolutePath(),"cartas");
+		
 		db.getCollection("pedidos").drop();
 	}
 }

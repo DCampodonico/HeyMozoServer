@@ -1,0 +1,13 @@
+{
+    "id": 1,
+    "nombre": "Bar-Resto 1980",
+    "moneda": {
+        "moneda": "$"
+    },
+    "latitud": -31.6366443,
+    "longitud": -60.699605,
+    "direccion": "Blvd. Galvez 2281, S3000ABA Santa Fe",
+    "telefono": "0342 452-0309",
+    "pagina": "https://www.facebook.com/1980boulevard/",
+    "rating": 4.1
+}
