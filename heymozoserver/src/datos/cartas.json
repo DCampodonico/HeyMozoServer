@@ -15,7 +15,8 @@
                     "id": 1,
                     "nombre": "Empanada de carne",
                     "precio": 12,
-                    "descripcion_corta":"Saladas o dulces. Carne vacuna, con aceitunas negras."
+                    "descripcion_corta":"Saladas o dulces. Carne vacuna, con aceitunas negras.",
+                    "descripcion_larga":"Esto es una descripcion muy laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggggggggggggggggggggggggggggggggggggggaaaaaaaaaaa. Demasiadoooooooooooooooooooooooooooooooooooooooooooooooooooo....."
                 },
                 {
                     "id": 2,
@@ -39,8 +40,7 @@
                     "id": 5,
                     "nombre": "Empanada árabe",
                     "precio": 18,
-                    "descripcion_corta":"Cebolla, tomate y limón a gusto",
-                    "descripcion_larga":"La gastronomía árabe es el conjunto de cocinas pertenecientes a los países árabes. Se puede decir que es el conjunto de comidas tradicionales a los ciudadanos de los Estados árabes del Golfo incluyendo todos los países de la Península Arábica, los países del norte de África cuya mayoría de idioma es el idioma árabe. La cocina árabe se puede ver fácilmente que es una mezcla equilibrada de características gastronómicas mediterráneas y de cocina India en el empleo de las especias."
+                    "descripcion_corta":"Cebolla, tomate y limón a gusto"
                 }
             ]
         },
@@ -50,16 +50,40 @@
             "productos": [
                 {
                     "id": 1,
-                    "nombre": "Sandwich triple",
-                    "precio": 12,
-                    "descripcion_corta":"Con jamón y queso",
-                    "descripcion_larga":"sdgd"
+                    "nombre": "Sandwich de miga triple",
+                    "precio": 22,
+                    "descripcion_corta":"Jamón, queso, lechuga y tomate."
                 },
                 {
                     "id": 2,
-                    "nombre": "Sandwich triple",
-                    "precio": 12
-                }   
+                    "nombre": "Sandwich vegetariano",
+                    "precio": 40,
+                    "descripcion_corta":"Zapallito, cebolla, tomate, queso, huevo frito y morrón."
+                },
+                {
+                    "id": 3,
+                    "nombre": "Sandwich de pollo",
+                    "precio": 55,
+                    "descripcion_corta":"Pollo trozado, cebolla, pimiento, lechuga, tomate y queso cheddar."
+                },
+                {
+                    "id": 4,
+                    "nombre": "Sandwich de jamón",
+                    "precio": 52,
+                    "descripcion_corta":"Jamón, jamón crudo, lechuga y tomate."
+                },
+                {
+                    "id": 5,
+                    "nombre": "Sandwich de lomo",
+                    "precio": 90,
+                    "descripcion_corta":"Lomo asado, lechuga, tomate y fetas de queso."
+                },
+                {
+                    "id": 6,
+                    "nombre": "Sandwich de lomo especial",
+                    "precio": 95,
+                    "descripcion_corta":"Lomo asado, lechuga, tomate, fetas de queso, salsa especial y papas fritas."
+                },
             ]
         },
         {
@@ -69,83 +93,38 @@
                 {
                     "id": 1,
                     "nombre": "Especial",
-                    "precio": 122
+                    "precio": 170,
+                    "descripcion_corta":"Mozzarella, jamón, tomate y huevo."
                 },
                 {
                     "id": 2,
                     "nombre": "Napolitana",
-                    "precio": 190
+                    "precio": 190,
+                    "descripcion_corta":"Mozzarella, tomate y provenzal."
                 },
                 {
                     "id": 3,
                     "nombre": "Cebollada",
-                    "precio": 180
+                    "precio": 190,
+                    "descripcion_corta":"Mozzarella, cebolla y aceitunas negras."
                 },
                 {
                     "id": 4,
                     "nombre": "4 quesos",
-                    "precio": 172,
-                    "imagen": {"id":"1.1.1"}
+                    "precio": 190,
+                    "descripcion_corta":"Mozzarella, Parmesano, Provolone y Romano."
                 },
                 {
                     "id": 5,
-                    "nombre": "Especial",
-                    "precio": 122
+                    "nombre": "Suprema",
+                    "precio": 200,
+                    "descripcion_corta":"Carne, pepperoni, jamón, aceitunas negras, cebolla y salchicha."
                 },
                 {
                     "id": 6,
-                    "nombre": "Napolitana",
-                    "precio": 190
-                },
-                {
-                    "id": 7,
-                    "nombre": "Cebollada",
-                    "precio": 180
-                },
-                {
-                    "id": 8,
-                    "nombre": "4 quesos",
-                    "precio": 172
-                },
-                {
-                    "id": 9,
-                    "nombre": "Especial",
-                    "precio": 122
-                },
-                {
-                    "id": 10,
-                    "nombre": "Napolitana",
-                    "precio": 190
-                },
-                {
-                    "id": 11,
-                    "nombre": "Cebollada",
-                    "precio": 180
-                },
-                {
-                    "id": 12,
-                    "nombre": "4 quesos",
-                    "precio": 172
-                },
-                {
-                    "id": 13,
-                    "nombre": "Especial",
-                    "precio": 122
-                },
-                {
-                    "id": 14,
-                    "nombre": "Napolitana",
-                    "precio": 190
-                },
-                {
-                    "id": 15,
-                    "nombre": "Cebollada",
-                    "precio": 180
-                },
-                {
-                    "id": 16,
-                    "nombre": "4 quesos",
-                    "precio": 172
+                    "nombre": "De Pollo",
+                    "precio": 210,
+                    "descripcion_corta":"Mozzarella, pollo, salsa de pollo y tomate."
                 }
             ]
         },
@@ -155,63 +134,38 @@
             "productos": [
                 {
                     "id": 1,
-                    "nombre": "Helado",
-                    "precio": 56
+                    "nombre": "Bombón Escocés",
+                    "precio": 52,
+                    "descripcion_corta":"Chocolate, crema americana y almendras."
                 },
                 {
                     "id": 2,
                     "nombre": "Torta alemana",
-                    "precio": 56
+                    "precio": 52,
+                    "descripcion_corta":"En capas, con vainilla y cobertura de chocolate."
                 },
                 {
                     "id": 3,
                     "nombre": "Tiramisú",
-                    "precio": 56
+                    "precio": 52
                 },
                 {
                     "id": 4,
-                    "nombre": "Frutas",
-                    "precio": 56
+                    "nombre": "Ensalada de frutas",
+                    "precio": 52,
+                    "descripcion_corta":"Manzana, banana, durazno, frutillas y crema chantilly."
                 },
                 {
                     "id": 5,
-                    "nombre": "Helado",
-                    "precio": 56
+                    "nombre": "Copa helada",
+                    "precio": 110,
+                    "descripcion_corta":"Para 2 personas. 4 sabores a elección."
                 },
                 {
                     "id": 6,
-                    "nombre": "Torta alemana",
-                    "precio": 56
-                },
-                {
-                    "id": 7,
-                    "nombre": "Tiramisú",
-                    "precio": 56
-                },
-                {
-                    "id": 8,
-                    "nombre": "Frutas",
-                    "precio": 56
-                },
-                {
-                    "id": 9,
-                    "nombre": "Helado",
-                    "precio": 56
-                },
-                {
-                    "id": 10,
-                    "nombre": "Torta alemana",
-                    "precio": 56
-                },
-                {
-                    "id": 11,
-                    "nombre": "Tiramisú",
-                    "precio": 56
-                },
-                {
-                    "id": 12,
-                    "nombre": "Frutas",
-                    "precio": 56
+                    "nombre": "Flan",
+                    "precio": 52,
+                    "descripcion_corta":"Flan de vainilla con caramelo."
                 }
             ]
         },
@@ -221,78 +175,45 @@
             "productos": [
                 {
                     "id": 1,
-                    "nombre": "Fernet",
-                    "precio": 122
+                    "nombre": "Gaseosa",
+                    "precio": 26,
+                    "descripcion_corta":"500ml. Coca-Cola, Sprite, Fanta."
                 },
                 {
                     "id": 2,
-                    "nombre": "Gancia",
-                    "precio": 122
+                    "nombre": "Agua Mineral",
+                    "precio": 18,
+                    "descripcion_corta":"500ml."
                 },
                 {
                     "id": 3,
-                    "nombre": "Whisky",
-                    "precio": 190
+                    "nombre": "Vino",
+                    "precio": 110,
+                    "descripcion_corta":"Finca Las Moras. Malbec, Cabernet, Sauvignon."
                 },
                 {
                     "id": 4,
-                    "nombre": "Martini",
-                    "precio": 142
+                    "nombre": "Campari Cocktails",
+                    "precio": 70,
+                    "descripcion_corta":"Orange, Spritz, Tonic, Soda."
                 },
                 {
                     "id": 5,
-                    "nombre": "Jarra loca",
-                    "precio": 200
+                    "nombre": "Fernet Branca",
+                    "precio": 70,
+                    "descripcion_corta":"75cl."
                 },
                 {
                     "id": 6,
-                    "nombre": "Fernet",
-                    "precio": 122
+                    "nombre": "Whisky",
+                    "precio": 80,
+                    "descripcion_corta":"Whisky, vainilla y Coca-Cola."
                 },
                 {
                     "id": 7,
-                    "nombre": "Gancia",
-                    "precio": 122
-                },
-                {
-                    "id": 8,
-                    "nombre": "Whisky",
-                    "precio": 190
-                },
-                {
-                    "id": 9,
-                    "nombre": "Martini",
-                    "precio": 142
-                },
-                {
-                    "id": 10,
-                    "nombre": "Jarra loca",
-                    "precio": 200
-                },
-                {
-                    "id": 11,
-                    "nombre": "Fernet",
-                    "precio": 122
-                },
-                {
-                    "id": 12,
-                    "nombre": "Gancia",
-                    "precio": 122
-                },
-                {
-                    "id": 13,
-                    "nombre": "Whisky",
-                    "precio": 190
-                },
-                {
-                    "id": 14,
-                    "nombre": "Martini",
-                    "precio": 142
-                },
-                {
-                    "id": 15,
-                    "nombre": "Jarra loca",
-                    "precio": 200
+                    "nombre": "Tragos 1980",
+                    "precio": 0,
+                    "descripcion_corta":"Acercate a la barra del bar y probá nuestros tragos!"
                 }
             ]
         }

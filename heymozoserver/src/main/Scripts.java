@@ -90,7 +90,6 @@ public class Scripts {
 
             if (i.isFile()){
             	nombreImagen = i.getName().substring(0, i.getName().lastIndexOf('.'));
-            	System.out.println(nombreImagen);
 				FileInputStream imagenInputStream;
 				try {
 					imagenInputStream = new FileInputStream(i);
