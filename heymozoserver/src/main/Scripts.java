@@ -161,10 +161,10 @@ public class Scripts {
 
 	private static void init() {
 		db.getCollection("restaurantes").drop();
-		db.getCollection("restaurantes").insertOne(Document.parse(fileToString(new File("src/datos/restaurantes.json").getAbsolutePath())));
+		db.getCollection("restaurantes").insertMany(Document.parse(fileToString(new File("src/datos/restaurantes.json").getAbsolutePath())).get("restaurantes", new ArrayList<Document>().getClass()));
 
 		db.getCollection("cartas").drop();
-		db.getCollection("cartas").insertOne(Document.parse(fileToString(new File("src/datos/cartas.json").getAbsolutePath())));
+		db.getCollection("cartas").insertMany(Document.parse(fileToString(new File("src/datos/cartas.json").getAbsolutePath())).get("cartas", new ArrayList<Document>().getClass()));
 
 		db.getCollection("pedidos").drop();
 	}

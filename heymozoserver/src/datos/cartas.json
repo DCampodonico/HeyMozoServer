@@ -1,220 +1,224 @@
 {
-    "id": 1,
-    "nombre_restaurant": {
+  "cartas": [
+    {
+      "id": 1,
+      "nombre_restaurant": {
         "nombre": "Bar-Resto 1980",
         "moneda": {
-            "moneda": "$"
+          "moneda": "$"
         }
-    },
-    "secciones": [
+      },
+      "secciones": [
         {
-            "id": 1,
-            "nombre": "Empanadas",
-            "productos": [
-                {
-                    "id": 1,
-                    "nombre": "Empanada de carne",
-                    "precio": 12,
-                    "descripcion_corta":"Saladas o dulces. Carne vacuna, con aceitunas negras."
-                },
-                {
-                    "id": 2,
-                    "nombre": "Empanada de verdura",
-                    "precio": 12,
-                    "descripcion_corta":"Acelga, huevo, morrón y aceitunas"
-                },
-                {
-                    "id": 3,
-                    "nombre": "Empanada de pollo",
-                    "precio": 14,
-                    "descripcion_corta":"Pollo, cebolla, morrón y pimiento."
-                },
-                {
-                    "id": 4,
-                    "nombre": "Empanada de jamón y queso",
-                    "precio": 14,
-                    "descripcion_corta":"Jamón cocido, queso muzzarella y huevo"
-                },
-                {
-                    "id": 5,
-                    "nombre": "Empanada árabe",
-                    "precio": 18,
-                    "descripcion_corta":"Cebolla, tomate y limón a gusto"
-                }
-            ]
+          "id": 1,
+          "nombre": "Empanadas",
+          "productos": [
+            {
+              "id": 1,
+              "nombre": "Empanada de carne",
+              "precio": 12,
+              "descripcion_corta": "Saladas o dulces. Carne vacuna, con aceitunas negras."
+            },
+            {
+              "id": 2,
+              "nombre": "Empanada de verdura",
+              "precio": 12,
+              "descripcion_corta": "Acelga, huevo, morrón y aceitunas"
+            },
+            {
+              "id": 3,
+              "nombre": "Empanada de pollo",
+              "precio": 14,
+              "descripcion_corta": "Pollo, cebolla, morrón y pimiento."
+            },
+            {
+              "id": 4,
+              "nombre": "Empanada de jamón y queso",
+              "precio": 14,
+              "descripcion_corta": "Jamón cocido, queso muzzarella y huevo"
+            },
+            {
+              "id": 5,
+              "nombre": "Empanada árabe",
+              "precio": 18,
+              "descripcion_corta": "Cebolla, tomate y limón a gusto"
+            }
+          ]
         },
         {
-            "id": 2,
-            "nombre": "Sandwiches",
-            "productos": [
-                {
-                    "id": 1,
-                    "nombre": "Sandwich de miga triple",
-                    "precio": 22,
-                    "descripcion_corta":"Jamón, queso, lechuga y tomate."
-                },
-                {
-                    "id": 2,
-                    "nombre": "Sandwich vegetariano",
-                    "precio": 40,
-                    "descripcion_corta":"Zapallito, cebolla, tomate, queso, huevo frito y morrón."
-                },
-                {
-                    "id": 3,
-                    "nombre": "Sandwich de pollo",
-                    "precio": 55,
-                    "descripcion_corta":"Pollo trozado, cebolla, pimiento, lechuga, tomate y queso cheddar."
-                },
-                {
-                    "id": 4,
-                    "nombre": "Sandwich de jamón",
-                    "precio": 52,
-                    "descripcion_corta":"Jamón, jamón crudo, lechuga y tomate."
-                },
-                {
-                    "id": 5,
-                    "nombre": "Sandwich de lomo",
-                    "precio": 90,
-                    "descripcion_corta":"Lomo asado, lechuga, tomate y fetas de queso."
-                },
-                {
-                    "id": 6,
-                    "nombre": "Sandwich de lomo especial",
-                    "precio": 95,
-                    "descripcion_corta":"Lomo asado, lechuga, tomate, fetas de queso, salsa especial y papas fritas."
-                },
-            ]
+          "id": 2,
+          "nombre": "Sandwiches",
+          "productos": [
+            {
+              "id": 1,
+              "nombre": "Sandwich de miga triple",
+              "precio": 22,
+              "descripcion_corta": "Jamón, queso, lechuga y tomate."
+            },
+            {
+              "id": 2,
+              "nombre": "Sandwich vegetariano",
+              "precio": 40,
+              "descripcion_corta": "Zapallito, cebolla, tomate, queso, huevo frito y morrón."
+            },
+            {
+              "id": 3,
+              "nombre": "Sandwich de pollo",
+              "precio": 55,
+              "descripcion_corta": "Pollo trozado, cebolla, pimiento, lechuga, tomate y queso cheddar."
+            },
+            {
+              "id": 4,
+              "nombre": "Sandwich de jamón",
+              "precio": 52,
+              "descripcion_corta": "Jamón, jamón crudo, lechuga y tomate."
+            },
+            {
+              "id": 5,
+              "nombre": "Sandwich de lomo",
+              "precio": 90,
+              "descripcion_corta": "Lomo asado, lechuga, tomate y fetas de queso."
+            },
+            {
+              "id": 6,
+              "nombre": "Sandwich de lomo especial",
+              "precio": 95,
+              "descripcion_corta": "Lomo asado, lechuga, tomate, fetas de queso, salsa especial y papas fritas."
+            },
+          ]
         },
         {
-            "id": 3,
-            "nombre": "Pizzas",
-            "productos": [
-                {
-                    "id": 1,
-                    "nombre": "Especial",
-                    "precio": 170,
-                    "descripcion_corta":"Mozzarella, jamón, tomate y huevo."
-                },
-                {
-                    "id": 2,
-                    "nombre": "Napolitana",
-                    "precio": 190,
-                    "descripcion_corta":"Mozzarella, tomate y provenzal."
-                },
-                {
-                    "id": 3,
-                    "nombre": "Cebollada",
-                    "precio": 190,
-                    "descripcion_corta":"Mozzarella, cebolla y aceitunas negras."
-                },
-                {
-                    "id": 4,
-                    "nombre": "4 quesos",
-                    "precio": 190,
-                    "descripcion_corta":"Mozzarella, Parmesano, Provolone y Romano."
-                },
-                {
-                    "id": 5,
-                    "nombre": "Suprema",
-                    "precio": 200,
-                    "descripcion_corta":"Carne, pepperoni, jamón, aceitunas negras, cebolla y salchicha."
-                },
-                {
-                    "id": 6,
-                    "nombre": "De Pollo",
-                    "precio": 210,
-                    "descripcion_corta":"Mozzarella, pollo, salsa de pollo y tomate."
-                }
-            ]
+          "id": 3,
+          "nombre": "Pizzas",
+          "productos": [
+            {
+              "id": 1,
+              "nombre": "Especial",
+              "precio": 170,
+              "descripcion_corta": "Mozzarella, jamón, tomate y huevo."
+            },
+            {
+              "id": 2,
+              "nombre": "Napolitana",
+              "precio": 190,
+              "descripcion_corta": "Mozzarella, tomate y provenzal."
+            },
+            {
+              "id": 3,
+              "nombre": "Cebollada",
+              "precio": 190,
+              "descripcion_corta": "Mozzarella, cebolla y aceitunas negras."
+            },
+            {
+              "id": 4,
+              "nombre": "4 quesos",
+              "precio": 190,
+              "descripcion_corta": "Mozzarella, Parmesano, Provolone y Romano."
+            },
+            {
+              "id": 5,
+              "nombre": "Suprema",
+              "precio": 200,
+              "descripcion_corta": "Carne, pepperoni, jamón, aceitunas negras, cebolla y salchicha."
+            },
+            {
+              "id": 6,
+              "nombre": "De Pollo",
+              "precio": 210,
+              "descripcion_corta": "Mozzarella, pollo, salsa de pollo y tomate."
+            }
+          ]
         },
         {
-            "id": 4,
-            "nombre": "Postres",
-            "productos": [
-                {
-                    "id": 1,
-                    "nombre": "Bombón Escocés",
-                    "precio": 52,
-                    "descripcion_corta":"Chocolate, crema americana y almendras."
-                },
-                {
-                    "id": 2,
-                    "nombre": "Torta alemana",
-                    "precio": 52,
-                    "descripcion_corta":"En capas, con vainilla y cobertura de chocolate."
-                },
-                {
-                    "id": 3,
-                    "nombre": "Tiramisú",
-                    "precio": 52
-                },
-                {
-                    "id": 4,
-                    "nombre": "Ensalada de frutas",
-                    "precio": 52,
-                    "descripcion_corta":"Manzana, banana, durazno, frutillas y crema chantilly."
-                },
-                {
-                    "id": 5,
-                    "nombre": "Copa helada",
-                    "precio": 110,
-                    "descripcion_corta":"Para 2 personas. 4 sabores a elección."
-                },
-                {
-                    "id": 6,
-                    "nombre": "Flan",
-                    "precio": 52,
-                    "descripcion_corta":"Flan de vainilla con caramelo."
-                }
-            ]
+          "id": 4,
+          "nombre": "Postres",
+          "productos": [
+            {
+              "id": 1,
+              "nombre": "Bombón Escocés",
+              "precio": 52,
+              "descripcion_corta": "Chocolate, crema americana y almendras."
+            },
+            {
+              "id": 2,
+              "nombre": "Torta alemana",
+              "precio": 52,
+              "descripcion_corta": "En capas, con vainilla y cobertura de chocolate."
+            },
+            {
+              "id": 3,
+              "nombre": "Tiramisú",
+              "precio": 52
+            },
+            {
+              "id": 4,
+              "nombre": "Ensalada de frutas",
+              "precio": 52,
+              "descripcion_corta": "Manzana, banana, durazno, frutillas y crema chantilly."
+            },
+            {
+              "id": 5,
+              "nombre": "Copa helada",
+              "precio": 110,
+              "descripcion_corta": "Para 2 personas. 4 sabores a elección."
+            },
+            {
+              "id": 6,
+              "nombre": "Flan",
+              "precio": 52,
+              "descripcion_corta": "Flan de vainilla con caramelo."
+            }
+          ]
         },
         {
-            "id": 5,
-            "nombre": "Bebidas",
-            "productos": [
-                {
-                    "id": 1,
-                    "nombre": "Gaseosa",
-                    "precio": 26,
-                    "descripcion_corta":"500ml. Coca-Cola, Sprite, Fanta."
-                },
-                {
-                    "id": 2,
-                    "nombre": "Agua Mineral",
-                    "precio": 18,
-                    "descripcion_corta":"500ml."
-                },
-                {
-                    "id": 3,
-                    "nombre": "Vino",
-                    "precio": 110,
-                    "descripcion_corta":"Finca Las Moras. Malbec, Cabernet, Sauvignon."
-                },
-                {
-                    "id": 4,
-                    "nombre": "Campari Cocktails",
-                    "precio": 70,
-                    "descripcion_corta":"Orange, Spritz, Tonic, Soda."
-                },
-                {
-                    "id": 5,
-                    "nombre": "Fernet Branca",
-                    "precio": 70,
-                    "descripcion_corta":"75cl."
-                },
-                {
-                    "id": 6,
-                    "nombre": "Whisky",
-                    "precio": 80,
-                    "descripcion_corta":"Whisky, vainilla y Coca-Cola."
-                },
-                {
-                    "id": 7,
-                    "nombre": "Tragos 1980",
-                    "precio": 0,
-                    "descripcion_corta":"Acercate a la barra del bar y probá nuestros tragos!"
-                }
-            ]
+          "id": 5,
+          "nombre": "Bebidas",
+          "productos": [
+            {
+              "id": 1,
+              "nombre": "Gaseosa",
+              "precio": 26,
+              "descripcion_corta": "500ml. Coca-Cola, Sprite, Fanta."
+            },
+            {
+              "id": 2,
+              "nombre": "Agua Mineral",
+              "precio": 18,
+              "descripcion_corta": "500ml."
+            },
+            {
+              "id": 3,
+              "nombre": "Vino",
+              "precio": 110,
+              "descripcion_corta": "Finca Las Moras. Malbec, Cabernet, Sauvignon."
+            },
+            {
+              "id": 4,
+              "nombre": "Campari Cocktails",
+              "precio": 70,
+              "descripcion_corta": "Orange, Spritz, Tonic, Soda."
+            },
+            {
+              "id": 5,
+              "nombre": "Fernet Branca",
+              "precio": 70,
+              "descripcion_corta": "75cl."
+            },
+            {
+              "id": 6,
+              "nombre": "Whisky",
+              "precio": 80,
+              "descripcion_corta": "Whisky, vainilla y Coca-Cola."
+            },
+            {
+              "id": 7,
+              "nombre": "Tragos 1980",
+              "precio": 0,
+              "descripcion_corta": "Acercate a la barra del bar y probá nuestros tragos!"
+            }
+          ]
         }
-    ]
+      ]
+    }
+  ]
 }
