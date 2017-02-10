@@ -15,8 +15,7 @@
                     "id": 1,
                     "nombre": "Empanada de carne",
                     "precio": 12,
-                    "descripcion_corta":"Saladas o dulces. Carne vacuna, con aceitunas negras.",
-                    "descripcion_larga":"Esto es una descripcion muy laaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaarrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrggggggggggggggggggggggggggggggggggggggggggggggggggggggggggaaaaaaaaaaa. Demasiadoooooooooooooooooooooooooooooooooooooooooooooooooooo....."
+                    "descripcion_corta":"Saladas o dulces. Carne vacuna, con aceitunas negras."
                 },
                 {
                     "id": 2,
