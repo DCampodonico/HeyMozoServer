@@ -16,6 +16,7 @@ import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.DatatypeConverter;
 
+import org.apache.log4j.BasicConfigurator;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
@@ -28,6 +29,9 @@ import com.mongodb.util.JSON;
 
 public class Main {
 
+	static{
+		BasicConfigurator.configure();
+	}
 	public static final MongoClient mongoClient = new MongoClient(new ServerAddress("localhost", 27017));
 	public static final MongoDatabase db = mongoClient.getDatabase("heymozo");
 	public static final Random ran = new Random(new Date().getTime());
