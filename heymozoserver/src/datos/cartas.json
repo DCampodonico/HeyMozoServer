@@ -2,7 +2,8 @@
   "cartas": [
     {
       "id": 1,
-      "nombre_restaurant": {
+      "restaurante": {
+        "id": 1,
         "nombre": "Bar-Resto 1980",
         "moneda": {
           "moneda": "$"

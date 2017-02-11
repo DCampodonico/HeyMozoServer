@@ -61,7 +61,7 @@ public class Scripts {
 
 	private static void cambiarImagenRestauranteEnCarta(int idCarta) {
 		Document carta = db.getCollection("cartas").find(Filters.eq("id", idCarta)).first();
-		Document restaurante = (Document) carta.get("nombre_restaurant");
+		Document restaurante = (Document) carta.get("restaurante");
 
 		Document imagenDoc = new Document();
 		imagenDoc.append("id", idCarta + "");
