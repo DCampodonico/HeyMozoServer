@@ -1,5 +1,11 @@
 Servidor Api-Rest para la aplicación HeyMozo.
 
+## Autores
+
+* **Daniel Campodonico** - [DCampodonico](https://github.com/dcampodonico)
+* **Emiliano Gioria** - [emigioria](https://github.com/emigioria)
+* **Lucas Moretti** - [morettilucas](https://github.com/morettilucas)
+
 Introducción
 ----------
 
